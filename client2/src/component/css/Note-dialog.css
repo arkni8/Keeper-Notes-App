@@ -1,0 +1,82 @@
+.pop-out::before {
+    position: absolute;
+    top:0; left: 0;
+    width: 100%;
+    height: 100%;
+    content: '';
+    background-color: rgb(63, 63, 63);
+    opacity: 0.7;
+    z-index: 1050;
+}
+
+.pop-out {
+    position: absolute;
+    top: 0; left: 0;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.dialog-box {
+    width: 40%;
+    max-width: 600px;
+    min-width: 350px;
+    height: 60%;
+    background-color: transparent;
+    margin-inline: auto;
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    border: 1px solid rgba(0, 0, 0, 0.103);
+    z-index: 1550;
+    border-radius: 8px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 0 7px -3px black;
+}
+
+.dialog-box main {
+    color: aliceblue;
+    font-weight: 700;
+    font-size: 1.2em;
+    background-color: #f5ba13;
+    padding: 12px;
+    border-radius: 6px 6px 0 0;
+    box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.4);
+    position: relative;
+}
+
+.dialog-box section {
+    background-color: antiquewhite;
+    flex-grow: 1;
+    padding-block: 12px;
+    padding-inline: 12px;
+    padding-bottom: 60px;
+    border-radius: 0 0 6px 6px;
+    overflow-y: scroll;
+}
+
+.dialog-box p {
+    white-space: pre-wrap;
+}
+
+.dialog-box button {
+    position: absolute;
+    bottom: 0;
+    font-family: "Montserrat", serif;
+    background-color: #c2930f;
+    color: white;
+    padding-block: 10px;
+    border-radius: 6px;
+    border: none;
+    width: 100%;
+    box-shadow: 0 -1px 3px 0 rgba(0, 0, 0, 0.4);
+}
+
+.dialog-box button:hover, .dialog-box button:focus {
+    background-color: #e6e3cd;
+    color: black;
+    transition: all 0.3s;
+}

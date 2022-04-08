@@ -1,0 +1,76 @@
+.heading {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.right {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+    justify-content: space-between;
+
+}
+
+.right button {
+    display: block;
+    background-color: #c2930f;
+    color: rgb(255, 255, 255);
+    border-radius: 6px;
+    padding-block: 5px;
+    padding-inline: 15px;
+    border: none;
+    box-shadow: 0 0 6px -2px rgba(0, 0, 0, 0.61);
+    font-family: 'Montserrat';
+    font-size: 15px;
+}
+
+.right .dropdown {
+    display: none;
+    color: #000000;
+    box-shadow: 0 0 7px -4px rgb(0, 0, 0, 0.4);
+    border-radius: 100%;
+}
+
+.right button:hover, .right button:focus {
+    background-color: #e6e3cd;
+    color: black;
+    transition: all 0.3s;
+}
+
+.right p {
+    background-color: rgb(222, 228, 208);
+    border-radius: 8px;
+    text-align: center;
+    padding-block: 5px;
+    padding-inline: 15px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.left a {
+    text-decoration: none;
+    cursor: default;
+}
+
+.left a h1:hover, .left a h1:focus {
+    color: black;
+}
+
+@media screen and (width < 450px) {
+    div.right {
+        flex-direction: column;
+        gap: 8px;
+        justify-content: center;
+    }
+
+    div.right button.logout-btn {
+        display: none;
+        width: 100%;
+    }
+    div.right .dropdown {
+        display: inline-block;
+    }
+}

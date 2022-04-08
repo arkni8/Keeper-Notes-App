@@ -1,0 +1,83 @@
+.login-page {
+    text-align: center;
+    width: 100vw;
+    /* padding-block: 20vh;
+    padding-inline: clamp(40px, 3vw ,800px); */
+    height: 100vh;
+    background-color: #f8fa90;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-page .login-div {
+    width: clamp(350px, 80%, 700px);
+    display: flex;
+    flex-direction: column;
+    background-color: #f5ba13;
+    border-radius: 10px;
+    padding-inline: 50px;
+    padding-block: 50px;
+    box-shadow: 0 0 8px 0 rgba(129, 110, 26, 0.486);
+}
+
+.login-div button, .login-div input {
+    width: 100%;
+    margin-block: 5px;
+    text-align: center;
+    border-radius: 4px;
+    height: 5ch;
+    border: solid 1px black;
+}
+
+.login-div button {
+    background-color: #ffdf88;
+    font-family: 'Montserrat';
+    height: 4ch;
+    box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.4);
+}
+
+.login-div button:hover, .login-div button:focus {
+    background-color: #ffedbe;
+    font-family: 'Montserrat';
+    height: 4ch;
+    box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.4);
+}
+
+.login-div input {
+    border: solid 1px black;
+}
+
+.login-heading {
+    padding: 7px;
+}
+
+.login-para {
+    padding: 5px;
+}
+
+.login-div .login-form .home-btn {
+    display: block;
+    margin-block-start: 25px;
+    background-color: #ffdf88;
+    width: min(60%, 190px);
+    margin-inline: auto;
+    border-radius: 6px;
+    padding-block: 0.8ch;
+    box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.4);
+    text-decoration: none;
+    color: black;
+    font-size: 14px;
+    border: 1px solid;
+    cursor: default;
+}
+
+.login-div .login-form .home-btn:hover, .login-div .login-form .home-btn:focus {
+    background-color: #ffedbe;
+}
+
+.login-page footer p {
+    color: rgba(0, 0, 0, 0.603);
+    font-weight: 500;
+}

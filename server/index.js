@@ -12,11 +12,16 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({extended:false}));
 
-await mongoose.connect(process.env.DB_URI)
-.then (console.log("DB started"))
-.catch (err => {
-   console.log(err);
-});
+async function db() {
+   await mongoose.connect(process.env.DB_URI)
+   .then (console.log("DB started"))
+   .catch (err => {
+      console.log(err);
+   });
+}
+
+db();
+
 
 app.use('/user', authHandler);
 app.use('/dashboard', require('./routes/noteApiRoute'));

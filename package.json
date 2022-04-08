@@ -4,8 +4,8 @@
   "description": "App to create notes",
   "main": "index.js",
   "scripts": {
-    "start": "npm start --prefix server2",
-    "server": "npm run server --prefix server2",
+    "start": "node server/index.js",
+    "server": "nodemon server/index.js",
     "client": "npm start --prefix client2",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client2 && npm run build --prefix client2"
   },
@@ -13,5 +13,16 @@
     "node": "16.13.2"
   },
   "author": "Me",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^16.0.0",
+    "express": "^4.17.3",
+    "express-async-handler": "^1.2.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.2.9"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  }
 }

@@ -21,9 +21,9 @@ mongoose.connect(process.env.DB_URI)
 app.use('/user', authHandler);
 app.use('/dashboard', require('./routes/noteApiRoute'));
 
-app.use(express.static(path.join(__dirname,'../client2/build/')));
+app.use(express.static(path.join(__dirname,'../client/build/')));
 app.get('*', (_req, res) => {
-   return res.sendFile(path.resolve(__dirname, '../', 'client2', 'build', 'index.html'))
+   return res.sendFile(path.resolve(__dirname, '../', 'client', 'build', 'index.html'))
 });
 
 app.use(errorHandler);

@@ -12,7 +12,7 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({extended:false}));
 
-mongoose.connect(process.env.DB_URI)
+await mongoose.connect(process.env.DB_URI)
 .then (console.log("DB started"))
 .catch (err => {
    console.log(err);

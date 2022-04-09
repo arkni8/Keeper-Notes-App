@@ -59,7 +59,7 @@
     color: black;
 }
 
-@media screen and (width < 450px) {
+@media screen and (width < 600px) {
     div.right {
         flex-direction: column;
         gap: 8px;

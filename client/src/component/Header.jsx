@@ -17,7 +17,7 @@ function Header(props) {
     () => {
       var newWidth = window.innerWidth;
       const element = document.querySelector(".right .logout-btn");
-      if (newWidth > 450) {
+      if (newWidth > 600) {
         element.style.display = "block";
       } else {
         element.style.display = "none";

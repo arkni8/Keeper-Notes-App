@@ -1,16 +1,21 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import {Link, useNavigate} from 'react-router-dom';
 import '../component/css/Login.css';
 import login from '../auth/login'
 import { useAuth } from '../App';
 import { useRef } from 'react';
 import Footer from '../component/Footer';
+import { LoadContext } from '../App';
+import Box from '@mui/material/Box';
+import CircularProgress from '@mui/material/CircularProgress';
 
 function Login() {
     let mounted = useRef(true);
     const navigate = useNavigate();
     
     const [user, setUser] = useAuth();
+    const [isLoading, setLoading] = useContext(LoadContext);
+
     const [form, setForm] = useState({
         email: '',
         password: '',
@@ -24,6 +29,7 @@ function Login() {
             setUser(savedToken);
         }
         if (user.name && mounted.current) {
+            setLoading(false);
             navigate('/');
         }
         return () => mounted.current = false;
@@ -46,6 +52,7 @@ function Login() {
 
     async function submithandler(e) {
         e.preventDefault();
+        setLoading(true);
         try {
             const response = await login(form);
             if (response.status === 201 && mounted.current) {
@@ -54,11 +61,13 @@ function Login() {
             }
             else {
                 setAlert(true);
+                setLoading(false);
                 document.querySelector('.login-div form input').value = '';
             }
         } catch (error) {
             // console.log(error.message);
             setAlert(true);
+            setLoading(false);
             document.querySelector('.login-div form').reset();
         }
         setForm({
@@ -72,17 +81,22 @@ function Login() {
             <div className='login-div'>
                 <h2 className='login-heading'>Welcome to Notepad!</h2>
                 <p className='login-para'>Just enter your existing username to get back in ^ ^</p>
-                <form className='login-form' autoComplete='no' aria-autocomplete='no' onSubmit={submithandler}>
-                    <label htmlFor="email" style={{ display: "none" }}>Email</label>
-                    <input id='email' type="text" name="email" onChange={formData} 
-                        placeholder="Enter Email Address" value={form.email} />
-                    <input name="DummyPassword" type="password" style={{ display: "none" }}></input>
-                    <label htmlFor="password" style={{ display: "none" }}>Password</label>
-                    <input id='password' type="password" name="password" onChange={formData} 
-                        placeholder="Enter Password" value={form.password}/>
-                    <button type="submit">Login</button>
-                    <Link className='home-btn' to='/'>Back to Home</Link>
-                </form>
+                {isLoading
+                    ? <Box sx={{ textAlign: 'center', paddingTop: '15px' }}>
+                        <CircularProgress style={{ color: 'darkgoldenrod' }} />
+                    </Box>
+                    : <form className='login-form' autoComplete='no' aria-autocomplete='no' onSubmit={submithandler}>
+                        <label htmlFor="email" style={{ display: "none" }}>Email</label>
+                        <input id='email' type="text" name="email" onChange={formData} 
+                            placeholder="Enter Email Address" value={form.email} />
+                        <input name="DummyPassword" type="password" style={{ display: "none" }}></input>
+                        <label htmlFor="password" style={{ display: "none" }}>Password</label>
+                        <input id='password' type="password" name="password" onChange={formData} 
+                            placeholder="Enter Password" value={form.password}/>
+                        <button type="submit">Login</button>
+                        <Link className='home-btn' to='/'>Back to Home</Link>
+                    </form>
+                }
             </div>
             {alert && <p style={{ marginBlockStart: '14px' }}>Invalid Credentials, please try again</p>}
             <Footer/>

@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import Zoom from '@mui/material/Zoom';
 import CancelIcon from '@mui/icons-material/Cancel';
+import { LoadContext } from '../App';
 
 let c = 0;    // used to check for edit mode and keep infinite loop in check
 
@@ -11,6 +12,7 @@ function CreateArea(props) {
 
     // Variable to check if cancelling is getitng triggered.
     let cancelling = false;
+    const [_isLoading, setLoading] = useContext(LoadContext);
 
     const [note, setNote] = React.useState({title: props.titleValue, content: props.contentValue});
     const [focus, setFocus] = React.useState(false);
@@ -46,20 +48,25 @@ function CreateArea(props) {
         });
     }
 
+    function submitHandler(event) {
+        event.preventDefault();                                         /* to prevent default behavior of submitting and refreshing the page*/
+        setLoading(true);                                                       
+        if (cancelling) {
+            props.edit();
+            setLoading(false);
+        } else {
+            props.editValue ? props.edit(note) : props.onAdd(note)            /* condition to either go edit path or add path.*/
+        }                               
+        setNote({ title: "", content: "" });                                    /* resets the form*/
+        setFocus(false);                                                       /* Take focus away */
+        c = 0;                                                         /* cancels the call and gets a null back, hence no changes.*/
+    }
+
     // The return path
     return (
         <div>  {/* Form starts here */}
             <form className="create-note"
-                onSubmit={
-                    (event) => {
-                        event.preventDefault();                                                       /* to prevent default behavior of submitting and refreshing the page*/
-                        cancelling ? props.edit()                                                     /* cancels the call and gets a null back, hence no changes.*/
-                      : props.editValue ? props.edit(note) : props.onAdd(note)                                /* condition to either go edit path or add path.*/
-                        setNote({title: "", content: ""});                                                    /* resets the form*/
-                        setFocus(false);                                                                      /* Take focus away */
-                        c = 0;                                                                                /* resets counter */
-                        }
-            }>
+                onSubmit={submitHandler}>
                 {
                 focus && <input onChange={screenText}
                     name="title"

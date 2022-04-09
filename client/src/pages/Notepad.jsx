@@ -8,13 +8,17 @@ import Note from "../component/Note";
 import CreateArea from "../component/CreateArea";
 import Dialog from '../component/Dialog';
 import { useAuth } from '../App';
-import { useCallback, useEffect, useState, useRef } from 'react';
+import { useCallback, useEffect, useState, useRef, useContext } from 'react';
+import { LoadContext } from '../App';
+import Box from '@mui/material/Box';
+import CircularProgress from '@mui/material/CircularProgress';
 
 let idStore;
 let dbIdStore;
 
 export default function Notepad2() {
-    const [user] = useAuth();    
+    const [user] = useAuth();
+    const [isLoading, setLoading] = useContext(LoadContext);
 
     const y = useRef(0);
     const [noteArray, setNoteArray] = useState([]);
@@ -23,6 +27,9 @@ export default function Notepad2() {
     const [open, setOpen] = useState({});
 
     useEffect(() => {
+        // if (!isLoading) {
+        //     setLoading(true);
+        // }
         if (update) {
             callAPI();
             setUpdate(false);
@@ -32,11 +39,14 @@ export default function Notepad2() {
     async function callAPI() {
         const response = await getReq(user.token);
         setNoteArray(state => { return [...response.note] });
+        setLoading(false);
     }
 
     //Functon that adds a new Note to the noteArray.
     async function submit(newNote) {
+        setLoading(true);
         document.querySelector(".create-note textarea").style.paddingTop = "0.4ch";
+        
         const response = await submitReq(newNote, user.token);
         if (response) {
             setUpdate(true);
@@ -80,6 +90,7 @@ export default function Notepad2() {
             alert("Please cancel out of current note to delete.");
         } else {
             setNoteEdit(false);
+            setLoading(true);
             const response = await delReq(id, user.token);
             if (response) {
                 setUpdate(true);
@@ -91,6 +102,7 @@ export default function Notepad2() {
     //Function that gets triggered from inside CreateArea.jsx component, in order to send back a null so input can be cancelled properly.
     function cancelfunction(a, b) {
         document.querySelector(".create-note textarea").style.paddingTop = "0.4ch";
+        setLoading(false);
         return;
     }
         
@@ -164,6 +176,11 @@ export default function Notepad2() {
                 <div className="noteArea">
                     {noteArray.map(eachNote)}
                 </div>
+                {isLoading
+                    && <Box sx={{ textAlign: 'center', paddingTop: '15px' }}>
+                        <CircularProgress style={{ color: 'darkgoldenrod' }} />
+                    </Box>
+                }
                 <Footer/>
             </div>
             {(open.title||open.content) && <Dialog content={open} close={dialogOpen}/>}
